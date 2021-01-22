@@ -14,25 +14,48 @@ def verify():
     mycursor.execute(sql, [(user_verify), (pass_verify)])
     results = mycursor.fetchall()
     if results:
-        for i in results:
-            messagebox.showinfo("message","You have successfully logged")
-
-            break
-
-        else:
-            messagebox.showinfo("wrong login")
+        messagebox.showinfo('Message', 'Logged in successfully')
 
 
+        root = Tk()
+        root.title("Sign-in Sign-out")
+        root.geometry("250x100")
+        signIn = datetime.now()
+        x = signIn.strftime("%H:%M:%S")
 
-# def sign():
-#     if regbtn:
-#         window.withdraw()
-#         import reg
-#         reg.reg()
+        def signout():
+            timeout = datetime.now()
+
+            y = timeout.strftime("%H:%M:%S")
+            z = username.get()
+
+            timeInfo = z, x, y
+
+            timeComm = "INSERT INTO sign_register(username, sign_in, sign_out) VALUES(%s, %s, %s)"
+
+            mycursor.execute(timeComm, timeInfo)
+
+            mydb.commit()
+            messagebox.showinfo('Message', 'Signed out!')
+            root.destroy()
+
+        outbtn = Button(root, command=signout, text="Sign-Out")
+        outbtn.place(x=10, y=10)
+
+    else:
+        messagebox.showinfo("message", "wrong login")
+
+
+
+
+
+
+
 
 window= tk.Tk()
 window.title("Login page")
 window.geometry("450x450")
+window.configure(background="lightgreen")
 
 lbuse = tk.Label(window, text="Username")
 lbuse.place(x=50, y=20)
@@ -43,7 +66,7 @@ username.place(x=250, y=20, width=100)
 lbpass = tk.Label(window, text="Password")
 lbpass.place(x=50, y=50)
 
-password = tk.Entry(window, width=35)
+password = tk.Entry(window, width=35, show="*")
 password.place(x=250, y=50, width=100)
 
 lnum = tk.Label(window, text="Mobile-Number")
