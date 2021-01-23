@@ -6,7 +6,7 @@ from datetime import *
 
 mydb= mysql.connector.connect(user='lifechoices', password='@Lifechoices1234',host='127.0.0.1',database='lifechoicesonline',auth_plugin='mysql_native_password')
 mycursor=mydb.cursor()
-
+#login button function
 def verify():
     user_verify = username.get()
     pass_verify= password.get()
@@ -22,12 +22,13 @@ def verify():
         root.geometry("250x100")
         signIn = datetime.now()
         x = signIn.strftime("%H:%M:%S")
-
+#sign out functoin
         def signout():
             timeout = datetime.now()
 
             y = timeout.strftime("%H:%M:%S")
             z = username.get()
+
 
             timeInfo = z, x, y
 
@@ -50,13 +51,18 @@ def verify():
 
 
 
-
+def sign():
+    if regbtn:
+        window.withdraw()
+        import regist
+        regist
 
 window= tk.Tk()
 window.title("Login page")
 window.geometry("450x450")
 window.configure(background="lightgreen")
 
+#labels and entries
 lbuse = tk.Label(window, text="Username")
 lbuse.place(x=50, y=20)
 
@@ -78,6 +84,12 @@ numb.place(x=250, y=80, width=100)
 logbtn= tk.Button(window, text="Login", bg="green", command=verify)
 logbtn.place(x=50, y=135, width=55)
 
+regbtn = tk.Button(window, text="Register", bg="green", command=sign)
+regbtn.place(x=200, y=135, width=100)
+adbtn = tk.Button(window, text="Admin", bg="blue", command=sign)
+adbtn.place(x=50, y=200, width=100)
+
+#close function
 def close():
     ext = messagebox.askyesno(title="?", message="are you sure, you want to exit?")
     if ext == True:
@@ -86,7 +98,7 @@ def close():
         return None
 
 #exit button
-exitbtn = Button(window, command=close, text="exit")
+exitbtn = Button(window, command=close, text="exit",bg="green")
 exitbtn.place(x=120, y=135)
 
 window.mainloop()

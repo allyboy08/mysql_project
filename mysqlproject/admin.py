@@ -1,11 +1,16 @@
 from tkinter import *
 import mysql.connector
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox
 
 
 mydb= mysql.connector.connect(user='lifechoices', password='@Lifechoices1234',host='127.0.0.1',database='lifechoicesonline',auth_plugin='mysql_native_password')
 mycursor=mydb.cursor()
+
+
+
+
 
 
 def verify():
@@ -18,22 +23,22 @@ def verify():
         if results:
             table = Tk()
             table.title("Database tables")
-            table.geometry("880x750")
+            table.geometry("1100x500")
             table.resizable(False,False)
 
             # SHOWING USERS IN A LIST BOX
 
             fname = Label(table, text="Full name")
             usernm = Label(table, text="Username")
-            passwrd = Label(table, text="Password")
+            stat = Label(table, text="Status")
 
 
             fnamemList = Listbox(table, width=25)
             usernmList = Listbox(table, width=25)
-            passwrdList = Listbox(table, width=25)
+            statList = Listbox(table, width=25)
 
             # SHOWING SIGN IN/SIGN OUT TIMES IN A LIST BOX
-            Username = Label(table, text="Username")
+
             signin = Label(table, text="Sign in")
             signout = Label(table, text="Sign out")
 
@@ -62,7 +67,7 @@ def verify():
             tab = mycursor.fetchall()
 
             for i in tab:
-                passwrdList.insert(END, i)
+                statList.insert(END, i)
 
 
 
@@ -89,15 +94,17 @@ def verify():
             fnamemList.place(x=5, y=20)
             usernm.place(x=225, y=4)
             usernmList.place(x=225, y=20)
-            passwrd.place(x=445, y=4)
-            passwrdList.place(x=445, y=20)
+            stat.place(x=445, y=4)
+            statList.place(x=445, y=20)
 
-            Username.place(x=5, y=210)
-            usernamelist.place(x=5, y=225)
-            signin.place(x=225, y=210)
-            inlist.place(x=225, y=225)
-            signout.place(x=445, y=210)
-            outlist.place(x=445, y=225)
+            # Username.place(x=445, y=4)
+            # usernamelist.place(x=445, y=220)
+            signin.place(x=665, y=4)
+            inlist.place(x=665, y=20)
+            signout.place(x=885, y=4)
+            outlist.place(x=885, y=20)
+
+
 
             table.mainloop()
         else:
@@ -110,6 +117,8 @@ window= tk.Tk()
 window.title("Login page")
 window.geometry("450x250")
 window.configure(background="lightgreen")
+
+
 
 
 
@@ -127,5 +136,18 @@ password.place(x=250, y=50, width=100)
 
 logbtn= tk.Button(window, text="Login", bg="green", command=verify)
 logbtn.place(x=50, y=135, width=55)
+
+
+def close():
+    ext = messagebox.askyesno(title="?", message="are you sure, you want to exit?")
+    if ext == True:
+        window.destroy()
+    else:
+        return None
+
+#exit button
+exitbtn = Button(window, command=close, text="exit")
+exitbtn.place(x=120, y=135)
+
 
 window.mainloop()

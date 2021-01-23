@@ -8,8 +8,8 @@ from datetime import *
 mydb= mysql.connector.connect(user='lifechoices', password='@Lifechoices1234',host='127.0.0.1',database='lifechoicesonline',auth_plugin='mysql_native_password')
 mycursor=mydb.cursor()
 
+#register function
 def verify():
-    try:
         name_verify = name.get()
         user_verify = use.get()
         pass_verify= passw.get()
@@ -19,45 +19,17 @@ def verify():
         val=(name_verify,user_verify,pass_verify,num_verify,status_verify)
         mycursor.execute(sql, val)
         mydb.commit()
-       # messagebox.showinfo("message","Successfully created")
-       #  if results:
-        messagebox.showinfo('Message', 'Logged in successfully')
 
-        root = Tk()
-        root.title("Sign-in Sign-out")
-        root.geometry("250x100")
-        signIn = datetime.now()
-        x = signIn.strftime("%H:%M:%S")
 
-        def signout():
-                timeout = datetime.now()
+        messagebox.showinfo("message","Successfully created")
 
-                y = timeout.strftime("%H:%M:%S")
-                z = use.get()
-
-                timeInfo = z, x, y
-
-                timeComm = "INSERT INTO sign_register(username, sign_in, sign_out) VALUES(%s, %s, %s)"
-
-                mycursor.execute(timeComm, timeInfo)
-
-                mydb.commit()
-                messagebox.showinfo('Message', 'Signed out!')
-                root.destroy()
-
-                outbtn = Button(root, command=signout, text="Sign-Out")
-                outbtn.place(x=10, y=10)
-
-    except ValueError as e:
-            print(e)
-            messagebox.showinfo("ERROR","This user already exists")
-            window.destroy()
 
 window= Tk()
 window.title("Login page")
 window.geometry("450x450")
 window.configure(background="lightgreen")
 
+#labels and entries
 fname = tk.Label(window, text="Full Name")
 fname.place(x=50, y=20)
 
@@ -92,5 +64,16 @@ scat.place(x=250, y=150, width=100)
 
 regbtn= tk.Button(window, text="Create User", bg="blue", command=verify)
 regbtn.place(x=150, y=200, width=100)
+
+def close():
+    ext = messagebox.askyesno(title="?", message="are you sure, you want to exit?")
+    if ext == True:
+        window.destroy()
+    else:
+        return None
+
+#exit button
+exitbtn = Button(window, command=close, text="exit")
+exitbtn.place(x=260, y=200)
 
 window.mainloop()
